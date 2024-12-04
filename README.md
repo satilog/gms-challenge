@@ -9,8 +9,8 @@ This repository contains the implementation of an ETL pipeline to process messy 
 ```plaintext
 GMS-CHALLENGE/
 ├── data/
-│   ├── csv/                # Contains input CSV files
-│   ├── json/               # Contains input JSON files
+│   ├── csv/                # Add the input CSV files
+│   ├── json/               # Add the input JSON files
 ├── db/
 │   ├── objectives/         # Contains SQL queries for analytics objectives
 │   │   ├── customer_retention.sql
