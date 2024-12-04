@@ -2,6 +2,7 @@ WITH ClaimProcessingTimes AS (
     SELECT
         cm.ClaimID,
         cm.ClaimType,
+        cm.Region,
         cm.ClaimAmount,
         cp.PaymentDate,
         cp.PaymentStatus,
@@ -10,23 +11,22 @@ WITH ClaimProcessingTimes AS (
     FROM claims_master cm
     INNER JOIN claims_payment cp ON cm.ClaimID = cp.ClaimID
 ),
-OverallMetrics AS (
+
+AggregatedProcessingTimes AS (
     SELECT
+        ClaimType,
+        Region,
+        COUNT(*) AS TotalClaims,
+        AVG(ProcessingTimeDays) AS AvgProcessingTimeDays,
         MIN(ProcessingTimeDays) AS MinProcessingTimeDays,
         MAX(ProcessingTimeDays) AS MaxProcessingTimeDays,
-        AVG(ProcessingTimeDays) AS AvgProcessingTimeDays,
+        PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY ProcessingTimeDays) AS MedianProcessingTimeDays,
         STDDEV(ProcessingTimeDays) AS StdDevProcessingTimeDays,
-        PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY ProcessingTimeDays) AS MedianProcessingTimeDays
+        AVG(ClaimAmount) AS AvgClaimAmount
     FROM ClaimProcessingTimes
+    GROUP BY ClaimType, Region
 )
 
-SELECT
-    cpt.*,
-    om.MinProcessingTimeDays,
-    om.MaxProcessingTimeDays,
-    om.AvgProcessingTimeDays,
-    om.MedianProcessingTimeDays,
-    om.StdDevProcessingTimeDays
-FROM ClaimProcessingTimes cpt
-CROSS JOIN OverallMetrics om
-ORDER BY cpt.ProcessingTimeDays DESC;
+SELECT *
+FROM AggregatedProcessingTimes
+ORDER BY AvgProcessingTimeDays DESC;
