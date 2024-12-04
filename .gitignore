@@ -1,0 +1,140 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Translations
+*.mo
+*.pot
+
+# Logs and databases
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff
+instance/
+.webassets-cache
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE configurations
+.idea/
+.vscode/
+*.iml
+
+# Docker
+*.pid
+**/docker-compose.override.yml  # Override configurations, if used
+docker-compose.yml.lock
+
+# Python dependencies
+pip-wheel-metadata/
+__pypackages__/
+poetry.lock
+pdm.lock
+.pdm.toml
+.pdm-python
+.pdm-build/
+
+# Generated files (e.g., migrations or build artifacts)
+migrations/
+generated/
+*.tmp
+*.bak
+*.swp
+
+# Temporary files
+*.swp
+*.swo
+*~
+
+# Coverage and static analysis
+.mypy_cache/
+.dmypy.json
+.pyre/
+.pytype/
+cython_debug/
+
+# Secrets (IMPORTANT: Ensure sensitive files are ignored)
+.env
+.env.*
+config.json
+etl_config.json
+
+# Build directories
+/tmp
+/.cache
+.cache/
+node_modules/
+
+# Data files
+data/
+data/csv/*
+data/json/*
+
+# DB-specific files
+db/*.sql  # If init.sql is version controlled, remove this line
+
+# Other
+.DS_Store
+Thumbs.db
+
+gms-env

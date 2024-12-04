@@ -1,0 +1,40 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: gms
+      POSTGRES_PASSWORD: gmschallenge@123
+      POSTGRES_DB: gms-db
+    ports:
+      - "5432:5432"                     # Expose PostgreSQL server
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gms -d gms-db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  etl_service:
+    build:
+      context: .                       # Set the build context to the root of the project
+      dockerfile: ./etl_service/Dockerfile  # Specify the Dockerfile location
+    container_name: etl_service
+    depends_on:
+      postgres:
+        condition: service_healthy    # Wait for PostgreSQL health check to pass
+    environment:
+      DB_HOST: postgres                # PostgreSQL service name (Docker DNS)
+      DB_PORT: 5432
+      DB_NAME: gms-db
+      DB_USER: gms
+      DB_PASSWORD: gmschallenge@123
+    volumes:
+      - ./data:/data                   # Mount the data directory for raw files
+    command: python /app/etl_service/src/main.py     # Run the ETL script on startup
+
+volumes:
+  pg_data:                              # Volume for PostgreSQL persistent data
